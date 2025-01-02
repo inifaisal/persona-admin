@@ -59,11 +59,11 @@ const data = {
       items: [
         {
           title: "Overview",
-          url: "#",
+          url: "/",
         },
         {
           title: "Analytics",
-          url: "#",
+          url: "/analytics",
         },
         {
           title: "Reports",
