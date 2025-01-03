@@ -8,6 +8,7 @@ import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { createLazyFileRoute } from '@tanstack/react-router'
 import { AlertTriangle } from 'lucide-react'
+import { StatsChart } from '@/components/blocks/chart/stats-chart'
 
 export const Route = createLazyFileRoute('/')({
   component: Index,
@@ -43,10 +44,14 @@ function Index() {
         <Alert>
           <AlertTriangle className="h-4 w-4" />
           <AlertTitle>Warning!</AlertTitle>
-          <AlertDescription>
+          <AlertDescription className=''>
             Some service still work in progress.
           </AlertDescription>
+
         </Alert>
+        <div>
+        <StatsChart />
+        </div>
         <OverviewChart />
         <div className='grid gap-4 sm:grid-cols-3 lg:grid-cols-3'>
           <PaymentOverviewTable />
