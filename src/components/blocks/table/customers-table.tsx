@@ -35,53 +35,61 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-const data: Payment[] = [
+const data: Customer[] = [
   {
     id: "m5gr84i9",
-    amount: 316,
-    status: "success",
+    name: "Liam Reed",
+    status: "active",
     email: "ken99@yahoo.com",
+    avatar: "https://robohash.org/ShadowFalcon92.png"
   },
   {
     id: "3u1reuv4",
-    amount: 242,
-    status: "success",
+    name: "Ava Cole",
+    status: "active",
     email: "Abe45@gmail.com",
+     avatar: "https://robohash.org/NeonWolfX.png"
   },
   {
     id: "derv1ws0",
-    amount: 837,
-    status: "processing",
+    name: "Noah Blake",
+    status: "active",
     email: "Monserrat44@gmail.com",
   },
   {
     id: "5kma53ae",
-    amount: 874,
-    status: "success",
+    name: "Emma Tate",
+    status: "active",
     email: "Silas22@gmail.com",
+     avatar: "https://robohash.org/StormVortex99.png"
   },
   {
     id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
+    name: "Jack Finn",
+    status: "inactive",
     email: "carmella@hotmail.com",
   },
 ]
 
-export type Payment = {
+export type Customer = {
   id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
+  name: string
+  status: "inactive" | "active"
   email: string
+  avatar?: string
 }
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Customer>[] = [
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "avatar",
+    header: "Avatar",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <Avatar>
+      <AvatarImage src={row.getValue("avatar")} />
+      <AvatarFallback>AV</AvatarFallback>
+    </Avatar>
     ),
   },
   {
@@ -100,19 +108,18 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    accessorKey: "name",
+    header: () => "Name",
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
-
-      return <div className="text-right font-medium">{formatted}</div>
+      return <div className="capitalize font-medium">{row.getValue("name")}</div>
     },
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("status")}</div>
+    ),
   },
   {
     id: "actions",
@@ -145,7 +152,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ]
 
-export function UsersTable() {
+export function CustomersTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -175,41 +182,9 @@ export function UsersTable() {
 
   return (
     <div className="w-full col-span-2">
-      <div className="flex items-center mb-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+ <div className=" mb-4">
+        <h2 className="text-lg font-bold">Top 5 Customers this month</h2>
+        <p>January 2025</p>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -260,30 +235,6 @@ export function UsersTable() {
             )}
           </TableBody>
         </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
       </div>
     </div>
   )

@@ -1,13 +1,13 @@
 import { OverviewChart } from '@/components/blocks/chart/overview-chart'
 import { SampleChart } from '@/components/blocks/chart/sample-chart'
 import { PaymentOverviewTable } from '@/components/blocks/table/payment-overview-table'
-import { UsersTable } from '@/components/blocks/table/users-table'
+import { CustomersTable } from '@/components/blocks/table/customers-table'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { Terminal, AlertTriangle } from 'lucide-react'
+import { AlertTriangle } from 'lucide-react'
 
 export const Route = createLazyFileRoute('/')({
   component: Index,
@@ -53,7 +53,7 @@ function Index() {
           <SampleChart />
         </div>
         <div className='grid'>
-        <UsersTable />
+        <CustomersTable />
         </div>
       </div>
     </>
