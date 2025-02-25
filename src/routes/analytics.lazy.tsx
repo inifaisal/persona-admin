@@ -1,5 +1,6 @@
 import { AnalyticsMainChart } from '@/components/blocks/chart/analytics-main-chart'
 import { AnalyticsUsersChart } from '@/components/blocks/chart/analytics-users-chart'
+import { ThemeSwitcher } from '@/components/blocks/theme-switcher'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -18,7 +19,7 @@ export const Route = createLazyFileRoute('/analytics')({
 
 function Analytics() {
   return <>
-    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+    <header className="flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
       <div className="flex items-center gap-2 px-4">
         <SidebarTrigger className="-ml-1" />
         <Separator orientation="vertical" className="mr-2 h-4" />
@@ -39,6 +40,9 @@ function Analytics() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+      </div>
+      <div className='px-4'>
+        <ThemeSwitcher />
       </div>
     </header>
     <div className="grid p-4 gap-4">
