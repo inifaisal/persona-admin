@@ -3,5 +3,4 @@ node_modules
 .github
 *.tf
 Dockerfile
-nginx.conf
 .env
