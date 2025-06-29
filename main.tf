@@ -26,15 +26,18 @@ resource "docker_image" "app_image" {
 # Terraform will ensure a container matching this configuration is running.
 resource "docker_container" "app_container" {
   # The container name
-  name  = "my-web-app"
+  name  = "persona-admin"
 
-  # Use the image we just pulled. The 'latest' attribute is the image ID with digest.
-  image = docker_image.app_image.latest
+  # *** THIS LINE IS FIXED ***
+  # Use the repo_digest from the image resource. This is a unique
+  # identifier that changes when the image is updated, triggering a recreate.
+  image = docker_image.app_image.repo_digest
 
   # Restart policy
   restart = "always"
 
-  # Port mapping: Map port 8080 on the host to port 3000 in the container
+  # Port mapping: Map port 8080 on the host to port 80 in the container
+  # (updated for the Nginx React app)
   ports {
     internal = 80
     external = 8080
@@ -42,7 +45,6 @@ resource "docker_container" "app_container" {
 
   # This is a key trick: If the image ID changes, Terraform will destroy
   # and recreate the container, thus "redeploying" it.
-  # We use a lifecycle block to prevent errors on the initial creation.
   lifecycle {
     create_before_destroy = true
   }
